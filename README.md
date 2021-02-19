@@ -10,4 +10,5 @@ I built a basic framework for email/login functionalities, connection to algod-c
 * export FLASK_APP=flasky.py
 * export MAIL_USERNAME=youremailadress@gmail.com
 * export MAIL_PASSWORD=your email password
-**for email functionalities to work, you have to approve for insecure apps in your gmail setting
+* 
+**for email functionalities to work, you have to approve for insecure apps in your gmail setting**
