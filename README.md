@@ -15,6 +15,8 @@ __set up a few environment variables by adding the following to your .bashrc / .
 * export FLASK_APP=flasky.py
 * export MAIL_USERNAME=youremailadress@gmail.com
 * export MAIL_PASSWORD=your email password
+* export ALGOD_ADDRESS=https://testnet-algorand.api.purestake.io/ps2
+* export API_KEY= your api key obtained from purestake
 
 __set up database:__
 * flask db migrate
