@@ -52,6 +52,16 @@
                     </ul>
                 </li>
                 {% endif %}
+                {% if current_user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Marketplace <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('auth.change_password') }}">Trending</a></li>
+                        <li><a href="{{ url_for('trans.account_summary') }}">Recent</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">Your Holdings</a></li>
+                    </ul>
+                </li>
+                {% endif %}
                 {% if current_user.is_authenticated and current_user.publish_right %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Publish <b class="caret"></b></a>
