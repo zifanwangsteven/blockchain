@@ -56,12 +56,17 @@ def register():
     if form.validate_on_submit():
         user = User(email=form.email.data.lower(),
                     username=form.username.data,
-                    password=form.password.data)
+                    password=form.password.data,
+                    publish_right = form.publisher.data)
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()
-        send_email(user.email, 'Confirm Your Account',
-                   'auth/email/confirm', user=user, token=token)
+        if user.publish_right:
+            send_email(user.email, 'Confirm Your Account',
+                       'auth/email/confirm_pub', user=user, token=token)
+        else:
+            send_email(user.email, 'Confirm Your Account',
+                       'auth/email/confirm', user=user, token=token)
         flash('A confirmation email has been sent to you by email.')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
@@ -84,8 +89,12 @@ def confirm(token):
 @login_required
 def resend_confirmation():
     token = current_user.generate_confirmation_token()
-    send_email(current_user.email, 'Confirm Your Account',
-               'auth/email/confirm', user=current_user, token=token)
+    if current_user.publish_right:
+        send_email(current_user.email, 'Confirm Your Account',
+                   'auth/email/confirm_pub', user=current_user, token=token)
+    else:
+        send_email(current_user.email, 'Confirm Your Account',
+                   'auth/email/confirm', user=current_user, token=token)
     flash('A new confirmation email has been sent to you by email.')
     return redirect(url_for('main.index'))
 

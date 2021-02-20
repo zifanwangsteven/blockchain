@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, current_app
 from flask_login import login_user, logout_user, login_required, \
     current_user
 from . import trans
@@ -11,11 +11,11 @@ from algosdk.v2client import algod
 def account_summary():
     if current_user.algod_accounts:
         account_list = current_user.algod_accounts
-        algod_address = 'https://testnet-algorand.api.purestake.io/ps2'
+        app = current_app._get_current_object()
+        algod_address = app.config['ALGOD_ADDRESS']
         algod_token = ""
-        headers = {
-            "X-API-Key": "KTDj0s3dSM9LPM1D8mXOUe1XMfmtj1b4eQPkA4A4",
-        }
+        headers = dict()
+        headers['X-API-KEY'] = app.config['API_KEY']
         algod_client = algod.AlgodClient(algod_token, algod_address, headers)
         for account in account_list:
             account.refresh(algod_client)
@@ -31,12 +31,11 @@ def register():
         if AlgorandAccount.query.filter_by(public_address = form.public_account.data, user_id=current_user.id).all():
             flash("Oops! You have already registered this address!")
         else:
-
-            algod_address = 'https://testnet-algorand.api.purestake.io/ps2'
+            app = current_app._get_current_object()
+            algod_address = app.config['ALGOD_ADDRESS']
             algod_token = ""
-            headers = {
-                "X-API-Key": "KTDj0s3dSM9LPM1D8mXOUe1XMfmtj1b4eQPkA4A4",
-            }
+            headers = dict()
+            headers['X-API-KEY'] = app.config['API_KEY']
             algod_client = algod.AlgodClient(algod_token, algod_address, headers)
             try :
                 account_info = algod_client.account_info(form.public_account.data)

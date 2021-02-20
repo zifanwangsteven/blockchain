@@ -24,6 +24,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[
         DataRequired(), EqualTo('password2', message='Passwords must match.')])
     password2 = PasswordField('Confirm password', validators=[DataRequired()])
+    publisher = BooleanField("Publisher?")
     submit = SubmitField('Register')
 
     def validate_email(self, field):

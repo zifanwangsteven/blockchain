@@ -6,6 +6,8 @@ To confirm your account please click on the following link:
 
 {{ url_for('auth.confirm', token=token, _external=True) }}
 
+Since you have also registered to become a publisher, you will also need to provide extra identifications on manually.
+
 Sincerely,
 
 The BondRand Team

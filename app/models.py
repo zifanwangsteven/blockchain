@@ -7,11 +7,11 @@ from . import db, login_manager
 
 
 class Permission:
-    FOLLOW = 1
-    COMMENT = 2
-    WRITE = 4
-    MODERATE = 8
-    ADMIN = 16
+    PURCHASE = 1
+    ADD_ACCOUNT = 2
+    PUBLISH = 4
+    ADMIN = 8
+
 
 
 class Role(db.Model):
@@ -30,12 +30,10 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE],
-            'Moderator': [Permission.FOLLOW, Permission.COMMENT,
-                          Permission.WRITE, Permission.MODERATE],
-            'Administrator': [Permission.FOLLOW, Permission.COMMENT,
-                              Permission.WRITE, Permission.MODERATE,
-                              Permission.ADMIN],
+            'User': [Permission.PURCHASE, Permission.ADD_ACCOUNT],
+            'Moderator': [Permission.PURCHASE, Permission.ADD_ACCOUNT, Permission.PUBLISH],
+            'Administrator': [Permission.PURCHASE, Permission.ADD_ACCOUNT,
+                              Permission.PUBLISH, Permission.ADMIN],
         }
         default_role = 'User'
         for r in roles:
@@ -80,6 +78,7 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.Text())
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
+    publish_right = db.Column(db.Boolean(), default=False)
     algod_accounts = db.relationship('AlgorandAccount', backref='user')
 
     def __init__(self, **kwargs):
@@ -87,8 +86,10 @@ class User(UserMixin, db.Model):
         if self.role is None:
             if self.email == current_app.config['FLASKY_ADMIN']:
                 self.role = Role.query.filter_by(name='Administrator').first()
+            elif self.publish_right:
+                self.Role = Role.query.filter_by(name='Moderator').first()
             if self.role is None:
-                self.role = Role.query.filter_by(default=True).first()
+                self.role = Role.query.filter_by(name='User').first()
 
     @property
     def password(self):

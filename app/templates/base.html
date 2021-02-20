@@ -51,7 +51,15 @@
                         <li><a href="{{ url_for('auth.logout') }}">Trade</a></li>
                     </ul>
                 </li>
-                {% else %}
+                {% endif %}
+                {% if current_user.is_authenticated and current_user.publish_right %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Publish <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('auth.change_password') }}">Publish a new bond</a></li>
+                        <li><a href="{{ url_for('trans.account_summary') }}">Published</a></li>
+                    </ul>
+                </li>
                 {% endif %}
             </ul>
         </div>

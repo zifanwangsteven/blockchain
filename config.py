@@ -16,6 +16,7 @@ class Config:
     ALGOD_ADDRESS = os.environ.get('ALGOD_ADDRESS')
     API_KEY = os.environ.get('API_KEY')
 
+
     @staticmethod
     def init_app(app):
         pass
