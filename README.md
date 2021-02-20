@@ -6,6 +6,9 @@ __replicate this Repo to your local machine:__
 * git clone https://github.com/zifanwangsteven/blockchain.git
 * start up a python virtual environment
 
+__start up a python virtual environment__
+* python -m venv venv
+* source venv/bin/activate (for mac/linux users)
 
 __install all packages in requirements.txt by:__
 * pip install -r requirements.txt
