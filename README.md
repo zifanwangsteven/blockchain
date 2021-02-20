@@ -30,3 +30,12 @@ __deploy on local server:__
 * flask run
 * open go to localhost:5000 in browser
 **for email functionalities to work, you have to approve for insecure apps in your gmail setting**
+
+
+## TO-DO
+* project financing related
+* bond features -> smart contract
+* non-transparent management -> price fluctuation -> supply chain management?
+* browser -> website 
+* marketplace -> secondary trading -> online trading -> YTM
+* query recent trading history
